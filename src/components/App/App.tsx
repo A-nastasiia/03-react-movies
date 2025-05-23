@@ -28,7 +28,7 @@ function App() {
       setError(false);
       setMovies([]);
 
-      const results = await fetchMovies({ query });
+      const results = await fetchMovies({query});
 
       if (results.length === 0) {
         toast.error("No movies found for your request.");
