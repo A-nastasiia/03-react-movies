@@ -18,7 +18,7 @@ export default function SearchBar({ onSubmit }: SearchBarProps) {
     }
 
     onSubmit(query.trim());
-    form.reset(); // очищення поля після відправлення
+    form.reset();
   };
 
   return (
