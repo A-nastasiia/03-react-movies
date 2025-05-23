@@ -1,7 +1,7 @@
 import axios from "axios";
 import type { Movie } from "../types/movie";
 
-const BASE_URL = `https://api.themoviedb.org/3/search/movie`;
+const BASE_URL = `https://api.themoviedb.org/3`;
 const API_KEY = import.meta.env.VITE_API_KEY;
 
 interface FetchMoviesParams {
