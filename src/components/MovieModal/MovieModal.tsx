@@ -1,44 +1,45 @@
-import css from "./MovieModal.module.css";
+import React, { useEffect } from "react";
 import type { Movie } from "../../types/movie";
-import { useEffect } from "react";
+import styles from "./MovieModal.module.css";
 
 interface MovieModalProps {
   movie: Movie;
   onClose: () => void;
 }
 
-export default function MovieModal({ movie, onClose }: MovieModalProps) {
-  const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    if (event.target === event.currentTarget) {
-      onClose();
-    }
-  };
+const MovieModal: React.FC<MovieModalProps> = ({ movie, onClose }) => {
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
+    document.body.style.overflow = "hidden";
+
+    const handleEsc = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         onClose();
       }
     };
-
-    document.addEventListener("keydown", handleKeyDown);
-    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", handleEsc);
 
     return () => {
-      document.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = "";
+      window.removeEventListener("keydown", handleEsc);
     };
   }, [onClose]);
 
+  const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
+
   return (
     <div
-      className={css.backdrop}
+      className={styles.backdrop}
       role="dialog"
-      onClick={handleBackdropClick}
       aria-modal="true"
+      onClick={handleBackdropClick}
     >
-      <div className={css.modal}>
+      <div className={styles.modal}>
         <button
-          className={css.closeButton}
+          className={styles.closeButton}
           aria-label="Close modal"
           onClick={onClose}
         >
@@ -47,9 +48,9 @@ export default function MovieModal({ movie, onClose }: MovieModalProps) {
         <img
           src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
           alt={movie.title}
-          className={css.image}
+          className={styles.image}
         />
-        <div className={css.content}>
+        <div className={styles.content}>
           <h2>{movie.title}</h2>
           <p>{movie.overview}</p>
           <p>
@@ -62,4 +63,6 @@ export default function MovieModal({ movie, onClose }: MovieModalProps) {
       </div>
     </div>
   );
-}
+};
+
+export default MovieModal;
